@@ -6,8 +6,8 @@ var router = Router();
 var empSvc = new EmployeeService();
 
 //Get all employees
-//GET /employees
-router.get("/", async(req,res)=>{
+//GET /employees/demo
+router.get("/demo", async(req,res)=>{
     let emps = await empSvc.getAllEmployees()
         .catch(err=>{
             console.log(err);
