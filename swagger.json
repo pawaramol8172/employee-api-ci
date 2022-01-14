@@ -1,0 +1,211 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Sample Employee API created with express and DynamoDB",
+        "version": "1.0.0",
+        "title": "Employee API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "sonusathyadas@synergetics-india.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "tags": [
+        {
+            "name": "employee",
+            "description": "All crud operations about employees"
+        }
+    ],
+    "paths": {
+        "/employees": {
+            "post": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "Add a new employee",
+                "description": "Add a new employee to database",
+                "operationId": "AddEmployee",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Employee object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "Get all employees",
+                "description": "Get the details of all employees in the table",
+                "operationId": "getAll",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Employee"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/employees/location/{locId}": {
+            "get": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "Find employees by location ID",
+                "description": "Returns list of all employees from the location",
+                "operationId": "getEmployeesByLocation",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "LocId",
+                        "in": "path",
+                        "description": "Location ID to search",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Employee"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/employees/location/{locId}/empcode/{empCode}": {
+            "get": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "Find employee by location ID and employee code",
+                "description": "Returns an employee by employee id in location",
+                "operationId": "getEmployee",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "locId",
+                        "in": "path",
+                        "description": "Location ID to search",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "empCode",
+                        "in": "path",
+                        "description": "Employee code to search",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Employee"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Employee not found",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                }
+            }
+        }       
+    },
+    "definitions": {
+        "ApiResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "Employee": {
+            "type": "object",
+            "required": [
+                "LocationID",
+                "EmpCode"
+            ],
+            "properties": {
+                "LocationID": {
+                    "type": "string",
+                    "example": "LOC"
+                },
+                "EmpCode":{
+                    "type":"string",
+                    "example":"E000"
+                },
+                "Name": {
+                    "type": "string",
+                    "example": "User 1"
+                },
+                "Department": {
+                    "type": "string",
+                    "example": "Department"
+                },
+                "Designation": {
+                    "type": "string",
+                    "example": "Designation"
+                },
+                "Age": {
+                    "type": "integer",
+                    "format":"int32"
+                },
+                "Location": {
+                    "type": "string",
+                    "example": "Location"
+                }
+            },
+            "xml": {
+                "name": "Pet"
+            }
+        }
+    }
+}
